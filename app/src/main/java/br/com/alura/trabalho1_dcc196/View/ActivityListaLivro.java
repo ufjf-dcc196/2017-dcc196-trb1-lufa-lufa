@@ -7,42 +7,67 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import br.com.alura.trabalho1_dcc196.Helper.ParticipanteHelper;
+import br.com.alura.trabalho1_dcc196.Model.Livro;
 import br.com.alura.trabalho1_dcc196.R;
 
 public class ActivityListaLivro extends AppCompatActivity {
 
-    private ListView lstLivros;
 
-    private List<String> livros = new ArrayList<>();
+
+    private Button btnVoltar;
+    private TextView txtTitulo;
+    private TextView txtEditora;
+    private TextView txtAno;
+    private TextView txtHrSaida;
+
+
+    private ListView lstParticipantesReservados;
+    private List<String> reservados = new ArrayList<>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lista_livro);
 
-        lstLivros = (ListView) findViewById(R.id.lstLivros);
+        lstParticipantesReservados = (ListView) findViewById(R.id.lstReservados);
 
         final ArrayAdapter<String> adaptador = new ArrayAdapter<String>(getApplicationContext(),
                 android.R.layout.simple_list_item_1,
                 android.R.id.text1,
-                livros
+                reservados
         );
-        lstLivros.setAdapter(adaptador);
+        lstParticipantesReservados.setAdapter(adaptador);
 
-        lstLivros.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+
+
+
+        btnVoltar = (Button) findViewById(R.id.btnVoltar);
+        txtTitulo = (TextView) findViewById(R.id.txtTitulo2);
+        txtEditora = (TextView) findViewById(R.id.txtEditora2);
+        txtAno = (TextView) findViewById(R.id.txtAnoPublicacao2);
+
+        Livro livro = (Livro) getIntent().getSerializableExtra("livro");
+        txtTitulo.setText(livro.getTitulo());
+        txtEditora.setText(livro.getEditora());
+        txtAno.setText(livro.getAno().toString());
+
+//        for(int i=0; i < MainActivity.getParticipantes().size(); i++) {
+//            if(MainActivity.getParticipantes()!=null && MainActivity.getParticipantes().get(i).getNomeLivro().equals(txtTitulo)) {
+//                adaptador.add(MainActivity.getParticipantes().get(i).toString());
+//            }
+//        }
+
+        btnVoltar.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                String escolha = adaptador.getItem(position);
-                if (escolha != null) {
-
-                    adaptador.remove(escolha);
-                    return true;
-                }
-                return false;
+            public void onClick(View view) {
+                finish();
             }
         });
     }

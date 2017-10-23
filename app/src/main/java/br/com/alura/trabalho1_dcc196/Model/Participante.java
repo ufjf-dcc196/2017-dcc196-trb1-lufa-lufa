@@ -15,6 +15,7 @@ public class Participante implements Serializable {
     private String email;
     private Calendar hrInicial;
     private Calendar hrFinal;
+    private String nomeLivro;
 
     public Participante() {
     }
@@ -56,6 +57,14 @@ public class Participante implements Serializable {
 
     public void setHrInicial(Calendar hrInicial) {
         this.hrInicial = hrInicial;
+    }
+
+    public String getNomeLivro() {
+        return nomeLivro;
+    }
+
+    public void setNomeLivro(String nomeLivro) {
+        this.nomeLivro = nomeLivro;
     }
 
     @Override

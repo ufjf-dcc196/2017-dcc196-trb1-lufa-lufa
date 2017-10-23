@@ -1,8 +1,10 @@
 package br.com.alura.trabalho1_dcc196.View;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -10,6 +12,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,6 +47,14 @@ public class ActivityCadastroLivro extends AppCompatActivity {
         String mensagem = getIntent().getStringExtra("mensagem");
         txtAux.setText(mensagem);
 
+        final ArrayAdapter<Livro> adaptador = new ArrayAdapter<>(getApplicationContext(),
+                android.R.layout.simple_list_item_1,
+                android.R.id.text1,
+                livros
+        );
+
+        lstLivros.setAdapter(adaptador);
+
         btnSalvar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -66,15 +77,19 @@ public class ActivityCadastroLivro extends AppCompatActivity {
                     Toast.makeText(ActivityCadastroLivro.this, "Valor de ano inválido. Digite novamente.", Toast.LENGTH_SHORT).show();
                     txtAno.requestFocus();
                 }
+                adaptador.notifyDataSetChanged();
             }
         });
 
-        final ArrayAdapter<Livro> adaptador = new ArrayAdapter<>(getApplicationContext(),
-                android.R.layout.simple_list_item_1,
-                android.R.id.text1,
-                livros
-        );
-        lstLivros.setAdapter(adaptador);
+        lstLivros.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Livro escolha = adaptador.getItem(position);
+                Intent in = new Intent(ActivityCadastroLivro.this, ActivityListaLivro.class);
+                in.putExtra("livro", escolha);
+                startActivity(in);
+            }
+        });
 
         btnVoltar.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -1,10 +1,11 @@
 package br.com.alura.trabalho1_dcc196.Model;
 
+import java.io.Serializable;
 /**
  * Created by Filipe on 22/10/2017.
  */
 
-public class Livro {
+public class Livro implements Serializable{
 
     private String titulo;
     private String editora;

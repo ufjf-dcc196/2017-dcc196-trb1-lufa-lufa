@@ -75,7 +75,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
         final ArrayAdapter<Participante> adaptador = new ArrayAdapter<>(getApplicationContext(),
                 android.R.layout.simple_list_item_1,
                 android.R.id.text1,
@@ -98,9 +97,12 @@ public class MainActivity extends AppCompatActivity {
                     escolha.setHrFinal(null);
                     Toast.makeText(MainActivity.this, "Participante "+escolha.getNome()+" reiniciou seu horário.", Toast.LENGTH_SHORT).show();
                 }
+                adaptador.notifyDataSetChanged();
                 return true;
             }
         });
+
+
 
         lstParticipantes.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -111,5 +113,6 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(in);
             }
         });
+
     }
 }

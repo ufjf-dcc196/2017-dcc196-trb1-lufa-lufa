@@ -4,16 +4,129 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="br.com.alura.trabalho1_dcc196.View.ActivityListaLivro">
+    tools:context="br.com.alura.trabalho1_dcc196.View.ActivityListaLivro"
+    tools:layout_editor_absoluteY="81dp"
+    tools:layout_editor_absoluteX="0dp">
+
+    <TextView
+        android:id="@+id/txttitulo1"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:text="Titulo:"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        tools:layout_constraintTop_creator="1"
+        tools:layout_constraintRight_creator="1"
+        tools:layout_constraintBottom_creator="1"
+        app:layout_constraintBottom_toBottomOf="@+id/txtTitulo2"
+        app:layout_constraintRight_toRightOf="@+id/txtEditora"
+        tools:layout_constraintLeft_creator="1"
+        app:layout_constraintLeft_toLeftOf="@+id/txtEditora"
+        app:layout_constraintTop_toTopOf="@+id/txtTitulo2" />
+
+    <TextView
+        android:id="@+id/txtEditora"
+        android:layout_width="0dp"
+        android:layout_height="37dp"
+        android:text="Editora:"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        tools:layout_constraintTop_creator="1"
+        tools:layout_constraintRight_creator="1"
+        tools:layout_constraintBottom_creator="1"
+        app:layout_constraintBottom_toBottomOf="@+id/txtAnoPublicacao1"
+        app:layout_constraintRight_toRightOf="@+id/txtAnoPublicacao1"
+        android:layout_marginTop="67dp"
+        tools:layout_constraintLeft_creator="1"
+        android:layout_marginBottom="53dp"
+        app:layout_constraintLeft_toLeftOf="@+id/txtAnoPublicacao1"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/txtAnoPublicacao1"
+        android:layout_width="98dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="16dp"
+        android:text="Ano Publicação: "
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        tools:layout_constraintTop_creator="1"
+        android:layout_marginTop="114dp"
+        tools:layout_constraintLeft_creator="1"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginLeft="16dp" />
+
+    <TextView
+        android:id="@+id/txtTitulo2"
+        android:layout_width="0dp"
+        android:layout_height="39dp"
+        android:text="TextView"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        tools:layout_constraintTop_creator="1"
+        tools:layout_constraintRight_creator="1"
+        tools:layout_constraintBottom_creator="1"
+        app:layout_constraintBottom_toTopOf="@+id/txtEditora"
+        app:layout_constraintRight_toRightOf="@+id/txtEditora2"
+        android:layout_marginTop="16dp"
+        tools:layout_constraintLeft_creator="1"
+        android:layout_marginBottom="12dp"
+        app:layout_constraintLeft_toLeftOf="@+id/txtEditora2"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/txtEditora2"
+        android:layout_width="0dp"
+        android:layout_height="37dp"
+        android:text="TextView"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        tools:layout_constraintTop_creator="1"
+        tools:layout_constraintRight_creator="1"
+        app:layout_constraintRight_toRightOf="@+id/txtAnoPublicacao2"
+        android:layout_marginTop="12dp"
+        app:layout_constraintTop_toBottomOf="@+id/txtTitulo2"
+        tools:layout_constraintLeft_creator="1"
+        app:layout_constraintLeft_toLeftOf="@+id/txtAnoPublicacao2" />
+
+    <TextView
+        android:id="@+id/txtAnoPublicacao2"
+        android:layout_width="127dp"
+        android:layout_height="0dp"
+        android:text="TextView"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        tools:layout_constraintTop_creator="1"
+        tools:layout_constraintBottom_creator="1"
+        android:layout_marginStart="41dp"
+        app:layout_constraintBottom_toBottomOf="@+id/txtAnoPublicacao1"
+        android:layout_marginTop="10dp"
+        app:layout_constraintTop_toBottomOf="@+id/txtEditora2"
+        tools:layout_constraintLeft_creator="1"
+        android:layout_marginBottom="6dp"
+        app:layout_constraintLeft_toRightOf="@+id/txtAnoPublicacao1"
+        android:layout_marginLeft="41dp" />
 
     <ListView
-        android:id="@+id/lstLivros"
+        android:id="@+id/lstReservados"
         android:layout_width="0dp"
-        android:layout_height="323dp"
+        android:layout_height="250dp"
+        android:layout_marginEnd="19dp"
+        android:layout_marginLeft="19dp"
+        android:layout_marginRight="19dp"
+        android:layout_marginStart="19dp"
+        android:layout_marginTop="181dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:layout_constraintLeft_creator="1"
+        tools:layout_constraintRight_creator="1" />
+
+    <Button
+        android:id="@+id/btnVoltar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Voltar"
         tools:layout_constraintRight_creator="1"
-        tools:layout_constraintTop_creator="1" />
+        tools:layout_constraintBottom_creator="1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        tools:layout_constraintLeft_creator="1"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintLeft_toLeftOf="parent" />
 </android.support.constraint.ConstraintLayout>
