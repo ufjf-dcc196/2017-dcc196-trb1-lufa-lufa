@@ -39,7 +39,7 @@ public class ActivityReserva extends AppCompatActivity {
 
                 if(!participante.isEmpty() && !livro.isEmpty()){
                     for(int i=0; i< MainActivity.getParticipantes().size(); i++) {
-                        if(MainActivity.getParticipantes().get(i).getNome().equals(participante)) {
+                        if(MainActivity.getParticipantes().get(i).getNome().equals(participante) && MainActivity.getLivros().get(i).getTitulo().equals(livro)) {
                             MainActivity.getParticipantes().get(i).setNomeLivro(livro);
                             Toast.makeText(ActivityReserva.this, "Reserva feita com sucesso!", Toast.LENGTH_SHORT).show();
                             achou = true;

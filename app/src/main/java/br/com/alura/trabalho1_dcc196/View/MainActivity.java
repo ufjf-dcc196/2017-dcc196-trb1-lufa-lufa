@@ -16,6 +16,7 @@ import java.util.Calendar;
 import java.util.List;
 
 import br.com.alura.trabalho1_dcc196.Helper.ParticipanteHelper;
+import br.com.alura.trabalho1_dcc196.Model.Livro;
 import br.com.alura.trabalho1_dcc196.Model.Participante;
 import br.com.alura.trabalho1_dcc196.R;
 
@@ -27,9 +28,13 @@ public class MainActivity extends AppCompatActivity {
     private ListView lstParticipantes;
 
     private static List<Participante> participantes = new ArrayList<>();
+    private static List<Livro> livros = new ArrayList<>();
 
     public static List<Participante> getParticipantes() {
         return participantes;
+    }
+    public static List<Livro> getLivros() {
+        return livros;
     }
 
     @Override
