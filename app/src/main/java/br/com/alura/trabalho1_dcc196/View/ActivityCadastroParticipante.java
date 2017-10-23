@@ -1,6 +1,5 @@
 package br.com.alura.trabalho1_dcc196.View;
 
-import android.content.Intent;
 import android.view.View;
 import android.widget.EditText;
 
@@ -29,7 +28,7 @@ public class ActivityCadastroParticipante extends AppCompatActivity {
         txtAux = (TextView) findViewById(R.id.txtAux);
         btnSalvar = (Button) findViewById(R.id.btnCadastrarP);
         btnVoltar = (Button) findViewById(R.id.btnVoltar);
-        txtNome = (EditText) findViewById(R.id.txtNome);
+        txtNome = (EditText) findViewById(R.id.txtNomeParticipante);
         txtEmail= (EditText) findViewById(R.id.txtEmail);
 
         String mensagem = getIntent().getStringExtra("mensagem");

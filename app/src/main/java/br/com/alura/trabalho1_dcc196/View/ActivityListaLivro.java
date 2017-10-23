@@ -58,11 +58,11 @@ public class ActivityListaLivro extends AppCompatActivity {
         txtEditora.setText(livro.getEditora());
         txtAno.setText(livro.getAno().toString());
 
-//        for(int i=0; i < MainActivity.getParticipantes().size(); i++) {
-//            if(MainActivity.getParticipantes()!=null && MainActivity.getParticipantes().get(i).getNomeLivro().equals(txtTitulo)) {
-//                adaptador.add(MainActivity.getParticipantes().get(i).toString());
-//            }
-//        }
+        for(int i=0; i < MainActivity.getParticipantes().size(); i++) {
+            if(MainActivity.getParticipantes()!=null && MainActivity.getParticipantes().get(i).getNomeLivro().equals(txtTitulo.getText())) {
+                adaptador.add(MainActivity.getParticipantes().get(i).toString());
+            }
+        }
 
         btnVoltar.setOnClickListener(new View.OnClickListener() {
             @Override

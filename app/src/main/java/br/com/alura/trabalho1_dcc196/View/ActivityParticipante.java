@@ -4,7 +4,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import br.com.alura.trabalho1_dcc196.Helper.ParticipanteHelper;
@@ -25,7 +24,7 @@ public class ActivityParticipante extends AppCompatActivity {
         setContentView(R.layout.activity_participante);
 
         btnVoltar = (Button) findViewById(R.id.btnVoltar);
-        txtNome = (TextView) findViewById(R.id.txtNome);
+        txtNome = (TextView) findViewById(R.id.txtNomeParticipante);
         txtEmail = (TextView) findViewById(R.id.txtEmail);
         txtHrEntrada = (TextView) findViewById(R.id.txtHrEntrada);
         txtHrSaida = (TextView) findViewById(R.id.txtHrSaida);
