@@ -56,7 +56,6 @@ public class ActivityCadastroParticipante extends AppCompatActivity {
         btnVoltar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 finish();
             }
         });

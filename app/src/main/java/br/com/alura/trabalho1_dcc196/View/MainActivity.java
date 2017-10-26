@@ -25,17 +25,20 @@ public class MainActivity extends AppCompatActivity {
     private Button btnParticipante;
     private Button btnLivro;
     private Button btnReserva;
+    private Button btnAtualizar;
     private ListView lstParticipantes;
 
     private static List<Participante> participantes = new ArrayList<>();
+    private static List<Participante> participantesNoEvento = new ArrayList<>();
     private static List<Livro> livros = new ArrayList<>();
 
-    public static List<Participante> getParticipantes() {
-        return participantes;
-    }
+    public static List<Participante> getParticipantes() { return participantes; }
+    public static List<Participante> getParticipantesNoEvento() { return participantesNoEvento; }
     public static List<Livro> getLivros() {
         return livros;
     }
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +48,16 @@ public class MainActivity extends AppCompatActivity {
         btnLivro = (Button) findViewById(R.id.btnCadastroLivros);
         btnParticipante = (Button) findViewById(R.id.btnCadastroParticipante);
         btnReserva = (Button) findViewById(R.id.btnCadastroReserva);
+        btnAtualizar = (Button) findViewById(R.id.btnAtualizar);
         lstParticipantes = (ListView) findViewById(R.id.lstParticipantes);
+
+        final ArrayAdapter<Participante> adaptador = new ArrayAdapter<>(getApplicationContext(),
+                android.R.layout.simple_list_item_1,
+                android.R.id.text1,
+                participantes
+        );
+
+        lstParticipantes.setAdapter(adaptador);
 
         btnParticipante.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -80,22 +92,26 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        final ArrayAdapter<Participante> adaptador = new ArrayAdapter<>(getApplicationContext(),
-                android.R.layout.simple_list_item_1,
-                android.R.id.text1,
-                participantes
-        );
-        lstParticipantes.setAdapter(adaptador);
+        btnAtualizar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+            if(adaptador != null)
+                adaptador.notifyDataSetChanged();
+            }
+        });
 
         lstParticipantes.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 Participante escolha = adaptador.getItem(position);
-                if (escolha.getHrInicial() == null) {
+                if (escolha.getHrInicial() == null && escolha != null) {
                     escolha.setHrInicial(Calendar.getInstance());
+                    participantesNoEvento.add(escolha);
                     Toast.makeText(MainActivity.this,"Participante "+escolha.getNome()+" entrou às "+ParticipanteHelper.mostraHoraInicial(escolha)+".", Toast.LENGTH_SHORT).show();
                 } else if (escolha.getHrFinal() == null){
                     escolha.setHrFinal(Calendar.getInstance());
+                    if(participantesNoEvento.contains(escolha))
+                        participantesNoEvento.remove(escolha);
                     Toast.makeText(MainActivity.this, "Participante "+escolha.getNome()+" saiu às "+ParticipanteHelper.mostraHoraFinal(escolha)+".", Toast.LENGTH_SHORT).show();
                 } else {
                     escolha.setHrInicial(null);
@@ -107,8 +123,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
-
         lstParticipantes.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -118,6 +132,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(in);
             }
         });
+
 
     }
 }

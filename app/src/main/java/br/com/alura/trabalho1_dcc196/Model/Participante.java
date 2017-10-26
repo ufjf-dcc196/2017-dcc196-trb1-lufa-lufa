@@ -3,6 +3,7 @@ package br.com.alura.trabalho1_dcc196.Model;
 import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -15,7 +16,7 @@ public class Participante implements Serializable {
     private String email;
     private Calendar hrInicial;
     private Calendar hrFinal;
-    private String nomeLivro;
+    private ArrayList<Livro> livrosReservados;
 
     public Participante() {
     }
@@ -25,6 +26,7 @@ public class Participante implements Serializable {
         this.email = email;
         this.hrInicial = null;
         this.hrFinal = null;
+        livrosReservados = new ArrayList<Livro>();
     }
 
     public Calendar getHrFinal() {
@@ -59,12 +61,16 @@ public class Participante implements Serializable {
         this.hrInicial = hrInicial;
     }
 
-    public String getNomeLivro() {
-        return nomeLivro;
+    public ArrayList<Livro> getLivrosReservados() {
+        return livrosReservados;
     }
 
-    public void setNomeLivro(String nomeLivro) {
-        this.nomeLivro = nomeLivro;
+    public void setLivrosReservados(ArrayList<Livro> livrosReservados) {
+        this.livrosReservados = livrosReservados;
+    }
+
+    public void adicionaReserva (Livro l) {
+        this.livrosReservados.add(l);
     }
 
     @Override

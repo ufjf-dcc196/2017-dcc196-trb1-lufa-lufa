@@ -7,30 +7,13 @@ import java.util.Calendar;
 import java.util.List;
 
 import br.com.alura.trabalho1_dcc196.Model.Participante;
+import br.com.alura.trabalho1_dcc196.View.MainActivity;
 
 /**
  * Created by Filipe on 22/10/2017.
  */
 
 public class ParticipanteHelper {
-
-    private List<Participante> participantes;
-
-    @SuppressWarnings({ "rawtypes", "unchecked" })
-    public void update(ArrayAdapter arrayAdapter, ArrayList<Participante> participantes){
-        arrayAdapter.clear();
-        for (Participante p : participantes){
-            arrayAdapter.add(p);
-        }
-    }
-
-    public void addParticipante(Participante participante) {
-        participantes.add(participante);
-    }
-
-    public List<Participante> getParticipantes() {
-        return participantes;
-    }
     
     public static String mostraHoraInicial(Participante p) {
         return p.getHrInicial().get(Calendar.HOUR)+":"+p.getHrInicial().get(Calendar.MINUTE)+":"+p.getHrInicial().get(Calendar.SECOND);
