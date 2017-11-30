@@ -15,7 +15,10 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import br.com.alura.trabalho1_dcc196.Helper.DbHelper;
+import br.com.alura.trabalho1_dcc196.Helper.LivroHelper;
 import br.com.alura.trabalho1_dcc196.Helper.ParticipanteHelper;
+import br.com.alura.trabalho1_dcc196.Helper.ReservaHelper;
 import br.com.alura.trabalho1_dcc196.Model.Livro;
 import br.com.alura.trabalho1_dcc196.Model.Participante;
 import br.com.alura.trabalho1_dcc196.R;
@@ -38,7 +41,9 @@ public class MainActivity extends AppCompatActivity {
         return livros;
     }
 
-
+    public static ParticipanteHelper ph = new ParticipanteHelper(DbHelper.getInstance());
+    public static LivroHelper lh = new LivroHelper(DbHelper.getInstance());
+    public static ReservaHelper rh  = new ReservaHelper(DbHelper.getInstance());
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

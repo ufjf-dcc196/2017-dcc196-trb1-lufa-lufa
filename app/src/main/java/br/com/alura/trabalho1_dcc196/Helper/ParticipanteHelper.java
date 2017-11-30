@@ -1,10 +1,13 @@
 package br.com.alura.trabalho1_dcc196.Helper;
 
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 import android.widget.ArrayAdapter;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import br.com.alura.trabalho1_dcc196.Model.Participante;
@@ -16,7 +19,7 @@ import br.com.alura.trabalho1_dcc196.View.MainActivity;
 
 public class ParticipanteHelper {
 
-    private SQLiteDatabase db = DbHelper.getInstance();
+    private static SQLiteDatabase db = DbHelper.getInstance();
 
     public ParticipanteHelper(SQLiteDatabase db) {
         this.db = db;
@@ -32,13 +35,11 @@ public class ParticipanteHelper {
         }
     }
 
-    public void criarParticipante(Participante u){
+    public static void criarParticipante(Participante u){
         try{
-            db.execSQL("INSERT INTO participante (nome, email, hrInicial, hrFinal) VALUES ('" +
+            db.execSQL("INSERT INTO participante (nome, email) VALUES ('" +
                     u.getNome()+"', '" +
-                    u.getEmail()+"', '" +
-                    u.getHrInicial()+"', '" +
-                    u.getHrFinal()+"')");
+                    u.getEmail()+"')");
             //db.execSQL(String.format("INSERT INTO livro (titulo, autor, editora, ano, preco) VALUES ('%s','%s','%s',%d,%f)", l.getTitulo(), l.getAutor(), l.getEditora(), l.getAno(), l.getPreco()));
 
         }catch(Exception e){
@@ -47,22 +48,9 @@ public class ParticipanteHelper {
         };
     }
 
-    public void criarMantenedor(Participante u){
-        try{
-            db.execSQL("INSERT INTO participante (nome, rg, cpf, email, endereco, senha, user) VALUES ('" +
-                   u.getNome()+"', '" +
-                   u.getEmail()+"', '" +
-                   u.getHrInicial()+"', '" +
-                   u.getHrFinal()+"')");
-            //db.execSQL(String.format("INSERT INTO livro (titulo, autor, editora, ano, preco) VALUES ('%s','%s','%s',%d,%f)", l.getTitulo(), l.getAutor(), l.getEditora(), l.getAno(), l.getPreco()));
-
-        }catch(Exception e){
-            Log.e("Mantenedor", "Erro ao inserir um mantenedor");
-            Log.e("Mantenedor", e.getLocalizedMessage());
-        };
-    }
-
     public List<Participante> listarTodos() {
+
+
         Cursor resultado = db.rawQuery("SELECT nome, email, hrInicial, hrFinal FROM participante", null);
         List<Participante> participantes = new ArrayList<>();
         resultado.moveToPosition(-1);
@@ -70,14 +58,20 @@ public class ParticipanteHelper {
             Participante u = new Participante();
             u.setNome(resultado.getString(0));
             u.setEmail(resultado.getString(1));
-            u.setHrInicial(resultado.getString(2));
-            u.setHrFinal(resultado.getString(3));
+            Long t = resultado.getLong(2) * 1000;
+            Calendar c = Calendar.getInstance();
+            c.setTimeInMillis(t);
+            u.setHrInicial(c);
+            Long t2 = resultado.getLong(3) * 1000;
+            Calendar c2 = Calendar.getInstance();
+            c2.setTimeInMillis(t2);
+            u.setHrFinal(c2);
             participantes.add(u);
         }
         return participantes;
     }
 
-    public Integer retornaIDParticipante(Participante u){
+    public static Integer retornaIDParticipante(Participante u){
         Cursor resultado = db.rawQuery("SELECT id, nome, email FROM participante", null);
         resultado.moveToPosition(-1);
         while (resultado.moveToNext()){
