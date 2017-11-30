@@ -1,5 +1,6 @@
 package br.com.alura.trabalho1_dcc196.Helper;
 
+import android.database.sqlite.SQLiteDatabase;
 import android.widget.ArrayAdapter;
 
 import java.util.ArrayList;
@@ -14,7 +15,14 @@ import br.com.alura.trabalho1_dcc196.View.MainActivity;
  */
 
 public class ParticipanteHelper {
-    
+
+    private SQLiteDatabase db = DbHelper.getInstance();
+
+    public UsuarioHelper(SQLiteDatabase db) {
+        this.db = db;
+        criaTabelaUsuario();
+    }
+
     public static String mostraHoraInicial(Participante p) {
         return p.getHrInicial().get(Calendar.HOUR)+":"+p.getHrInicial().get(Calendar.MINUTE)+":"+p.getHrInicial().get(Calendar.SECOND);
     }
