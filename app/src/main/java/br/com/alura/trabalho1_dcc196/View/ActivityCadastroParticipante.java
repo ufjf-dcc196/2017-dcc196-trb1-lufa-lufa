@@ -49,7 +49,7 @@ public class ActivityCadastroParticipante extends AppCompatActivity {
                 }
                 else {
                     Toast.makeText(ActivityCadastroParticipante.this, "Digite todas as informações do participante.", Toast.LENGTH_SHORT).show();
-
+                    finish();
                 }
             }
         });
