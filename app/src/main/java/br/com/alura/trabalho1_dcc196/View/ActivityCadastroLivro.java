@@ -68,6 +68,7 @@ public class ActivityCadastroLivro extends AppCompatActivity {
                         Livro l = new Livro(titulo,editora,ano);
                         MainActivity.getLivros().add(l);
                         adaptador.add(l);
+                        MainActivity.lh.criarLivro(l);
                         Toast.makeText(ActivityCadastroLivro.this, "Livro salvo com sucesso!", Toast.LENGTH_SHORT).show();
                     }
                     else {

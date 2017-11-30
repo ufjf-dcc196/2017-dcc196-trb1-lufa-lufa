@@ -1,6 +1,7 @@
 package br.com.alura.trabalho1_dcc196.View;
 
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -10,12 +11,13 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import br.com.alura.trabalho1_dcc196.Helper.LivroHelper;
 import br.com.alura.trabalho1_dcc196.Helper.ParticipanteHelper;
+import br.com.alura.trabalho1_dcc196.Helper.ReservaHelper;
 import br.com.alura.trabalho1_dcc196.Model.Livro;
 import br.com.alura.trabalho1_dcc196.Model.Participante;
 import br.com.alura.trabalho1_dcc196.R;
@@ -27,6 +29,10 @@ public class MainActivity extends AppCompatActivity {
     private Button btnReserva;
     private Button btnAtualizar;
     private ListView lstParticipantes;
+    private static SQLiteDatabase db;
+    public static LivroHelper lh;
+    public static ParticipanteHelper ph;
+    public static ReservaHelper rh;
 
     private static List<Participante> participantes = new ArrayList<>();
     private static List<Participante> participantesNoEvento = new ArrayList<>();
@@ -44,6 +50,13 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        db = openOrCreateDatabase("mercado", MODE_PRIVATE, null);
+        ph = new ParticipanteHelper(db);
+        lh = new LivroHelper(db);
+
+        participantes = ph.listarTodos();
+        participantesNoEvento = ph.listarTodosEvento();
+        livros = lh.listarTodos();
 
         btnLivro = (Button) findViewById(R.id.btnCadastroLivros);
         btnParticipante = (Button) findViewById(R.id.btnCadastroParticipante);
@@ -104,20 +117,20 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 Participante escolha = adaptador.getItem(position);
-                if (escolha.getHrInicial() == null && escolha != null) {
+                if (escolha != null && (escolha.getHrInicial() == null || escolha.getHrInicial().getTimeInMillis() == 0 )) {
                     escolha.setHrInicial(Calendar.getInstance());
                     participantesNoEvento.add(escolha);
                     Toast.makeText(MainActivity.this,"Participante "+escolha.getNome()+" entrou às "+ParticipanteHelper.mostraHoraInicial(escolha)+".", Toast.LENGTH_SHORT).show();
-                } else if (escolha.getHrFinal() == null){
+                } else if (escolha.getHrFinal() == null || escolha.getHrFinal().getTimeInMillis() == 0 ){
                     escolha.setHrFinal(Calendar.getInstance());
-                    if(participantesNoEvento.contains(escolha))
-                        participantesNoEvento.remove(escolha);
+                    participantesNoEvento.remove(escolha);
                     Toast.makeText(MainActivity.this, "Participante "+escolha.getNome()+" saiu às "+ParticipanteHelper.mostraHoraFinal(escolha)+".", Toast.LENGTH_SHORT).show();
                 } else {
                     escolha.setHrInicial(null);
                     escolha.setHrFinal(null);
                     Toast.makeText(MainActivity.this, "Participante "+escolha.getNome()+" reiniciou seu horário.", Toast.LENGTH_SHORT).show();
                 }
+                ph.alterarParticipante(escolha);
                 adaptador.notifyDataSetChanged();
                 return true;
             }

@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import br.com.alura.trabalho1_dcc196.Helper.ParticipanteHelper;
 import br.com.alura.trabalho1_dcc196.Model.Participante;
 import br.com.alura.trabalho1_dcc196.R;
 
@@ -44,6 +45,7 @@ public class ActivityCadastroParticipante extends AppCompatActivity {
                 if(!nome.isEmpty() && !email.isEmpty()){
                     Participante p = new Participante(nome,email);
                     MainActivity.getParticipantes().add(p);
+                    MainActivity.ph.criarParticipante(p);
                     Toast.makeText(ActivityCadastroParticipante.this, "Participante salvo com sucesso!", Toast.LENGTH_SHORT).show();
                 }
                 else {

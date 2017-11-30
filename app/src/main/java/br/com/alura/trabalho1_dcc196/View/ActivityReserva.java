@@ -27,7 +27,7 @@ public class ActivityReserva extends AppCompatActivity {
     private ListView lstParticipantes;
     private ListView lstLivros;
     private List<Livro> livros = MainActivity.getLivros();
-    private List<Participante> participantes = MainActivity.getParticipantesNoEvento();
+    private List<Participante> participantes;
 
     private Participante participanteSelecionado = null;
     private Livro livroSelecionado = null;
@@ -35,6 +35,8 @@ public class ActivityReserva extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reserva);
+
+        participantes = MainActivity.ph.listarTodosEvento();
 
         btnSalvar = (Button) findViewById(R.id.btnSalvar);
         btnVoltar = (Button) findViewById(R.id.btnVoltar);
