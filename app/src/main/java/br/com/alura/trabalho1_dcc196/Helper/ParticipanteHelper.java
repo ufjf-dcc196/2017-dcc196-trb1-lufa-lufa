@@ -20,7 +20,7 @@ public class ParticipanteHelper {
 
     public UsuarioHelper(SQLiteDatabase db) {
         this.db = db;
-        criaTabelaUsuario();
+        criaTabelaParticipante();
     }
 
     public static String mostraHoraInicial(Participante p) {
