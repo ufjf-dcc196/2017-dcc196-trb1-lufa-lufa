@@ -47,20 +47,6 @@ public class ReservaHelper {
         };
     }
 
-//    public List<Reserva> listarTodos() {
-//        Cursor resultado = db.rawQuery("SELECT titulo, editora, ano FROM reserva", null);
-//        List<Reserva> reservas = new ArrayList<>();
-//        resultado.moveToPosition(-1);
-//        while (resultado.moveToNext()){
-//            Reserva u = new Reserva();
-//            u.setTitulo(resultado.getString(0));
-//            u.setEditora(resultado.getString(1));
-//            u.setAno(resultado.getInt(2));
-//            reservas.add(u);
-//        }
-//        return reservas;
-//    }
-
     public Integer retornaIDReserva(Reserva u){
         Cursor resultado = db.rawQuery("SELECT id_participante, id_livro FROM reserva", null);
         resultado.moveToPosition(-1);

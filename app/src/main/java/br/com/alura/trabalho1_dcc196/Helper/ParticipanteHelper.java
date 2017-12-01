@@ -58,8 +58,6 @@ public class ParticipanteHelper {
                     u.getHrFinal()+"') " +
                     " WHERE id = '" +
                     retornaIDParticipante(u)+"')");
-            //db.execSQL(String.format("INSERT INTO livro (titulo, autor, editora, ano, preco) VALUES ('%s','%s','%s',%d,%f)", l.getTitulo(), l.getAutor(), l.getEditora(), l.getAno(), l.getPreco()));
-
         }catch(Exception e){
             Log.e("Participante", "Erro ao alterar um participante");
             Log.e("Participante", e.getLocalizedMessage());
