@@ -15,7 +15,9 @@ public class Participante implements Serializable {
     private String nome;
     private String email;
     private Calendar hrInicial;
+    private String hr_inicial;
     private Calendar hrFinal;
+    private String hr_final;
     private ArrayList<Livro> livrosReservados;
 
     public Participante() {
@@ -26,6 +28,8 @@ public class Participante implements Serializable {
         this.email = email;
         this.hrInicial = null;
         this.hrFinal = null;
+        this.hr_inicial = "";
+        this.hr_final = "";
         livrosReservados = new ArrayList<Livro>();
     }
 
@@ -67,6 +71,22 @@ public class Participante implements Serializable {
 
     public void setLivrosReservados(ArrayList<Livro> livrosReservados) {
         this.livrosReservados = livrosReservados;
+    }
+
+    public String getHr_inicial() {
+        return hr_inicial;
+    }
+
+    public void setHr_inicial(String hr_inicial) {
+        this.hr_inicial = hr_inicial;
+    }
+
+    public String getHr_final() {
+        return hr_final;
+    }
+
+    public void setHr_final(String hr_final) {
+        this.hr_final = hr_final;
     }
 
     public void adicionaReserva (Livro l) {

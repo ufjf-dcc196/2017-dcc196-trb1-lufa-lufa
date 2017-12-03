@@ -18,18 +18,13 @@ import br.com.alura.trabalho1_dcc196.R;
 
 public class ActivityListaLivro extends AppCompatActivity {
 
-
-
     private Button btnVoltar;
     private TextView txtTitulo;
     private TextView txtEditora;
     private TextView txtAno;
-    private TextView txtHrSaida;
-
 
     private ListView lstParticipantesReservados;
     private List<String> reservados = new ArrayList<>();
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,11 +51,11 @@ public class ActivityListaLivro extends AppCompatActivity {
         txtAno.setText(livro.getAno().toString());
 
 
-        for(int i=0; i < MainActivity.getParticipantes().size(); i++) {
-                ArrayList<Livro> listaLivro = MainActivity.getParticipantes().get(i).getLivrosReservados();
+        for(int i=0; i < MainActivity.getParticipantesNoEvento().size(); i++) {
+                ArrayList<Livro> listaLivro = MainActivity.getParticipantesNoEvento().get(i).getLivrosReservados();
                 for(int j=0; j<listaLivro.size(); j++) {
                     if (listaLivro.get(j).getTitulo().equals(livro.getTitulo())) {
-                        adaptador.add(MainActivity.getParticipantes().get(i).getNome().toString());
+                        adaptador.add(MainActivity.getParticipantesNoEvento().get(i).getNome().toString());
                     }
                 }
         }

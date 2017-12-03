@@ -26,24 +26,28 @@ public class ActivityReserva extends AppCompatActivity {
     private Button btnSalvar;
     private ListView lstParticipantes;
     private ListView lstLivros;
-    private List<Livro> livros = MainActivity.getLivros();
-    private List<Participante> participantes;
+    private List<Livro> livros;
+    private List<Participante> participantes = new ArrayList<>();
 
     private Participante participanteSelecionado = null;
     private Livro livroSelecionado = null;
+
+    ArrayAdapter<Participante> adaptadorParticipante;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reserva);
 
-        participantes = MainActivity.ph.listarTodosEvento();
+        livros = MainActivity.lh.listarTodos();
+        participantes = MainActivity.getParticipantesNoEvento();
 
         btnSalvar = (Button) findViewById(R.id.btnSalvar);
         btnVoltar = (Button) findViewById(R.id.btnVoltar);
         lstParticipantes = (ListView) findViewById(R.id.lstParticipantes);
         lstLivros = (ListView) findViewById(R.id.lstLivros);
 
-        final ArrayAdapter<Participante> adaptadorParticipante = new ArrayAdapter<>(getApplicationContext(),
+        adaptadorParticipante = new ArrayAdapter<>(getApplicationContext(),
                 android.R.layout.simple_list_item_1,
                 android.R.id.text1,
                 participantes
@@ -73,10 +77,10 @@ public class ActivityReserva extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if(livroSelecionado != null && participanteSelecionado != null) {
-
                     for (int i = 0; i < MainActivity.getParticipantesNoEvento().size(); i++) {
                         if (MainActivity.getParticipantesNoEvento().get(i).getNome().equals(participanteSelecionado.getNome())) {
                             MainActivity.getParticipantesNoEvento().get(i).adicionaReserva(livroSelecionado);
+                            MainActivity.rh.criarReserva(participanteSelecionado,livroSelecionado);
                             Toast.makeText(ActivityReserva.this, "Reserva feita com sucesso!", Toast.LENGTH_SHORT).show();
                         }
                     }
@@ -92,4 +96,13 @@ public class ActivityReserva extends AppCompatActivity {
             }
         });
     }
+
+//    @Override
+//    public void onResume() {
+//        super.onResume();
+//        if (adaptadorParticipante != null) {
+//            adaptadorParticipante.clear();
+//            adaptadorParticipante.addAll(MainActivity.ph.listarTodosEvento());
+//        }
+//    }
 }

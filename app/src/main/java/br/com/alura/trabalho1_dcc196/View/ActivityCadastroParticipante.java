@@ -42,15 +42,15 @@ public class ActivityCadastroParticipante extends AppCompatActivity {
                 String nome = txtNome.getText().toString();
                 String email = txtEmail.getText().toString();
 
-                if(!nome.isEmpty() && !email.isEmpty()){
+                if(!nome.isEmpty() || !email.isEmpty()){
                     Participante p = new Participante(nome,email);
                     MainActivity.getParticipantes().add(p);
                     MainActivity.ph.criarParticipante(p);
                     Toast.makeText(ActivityCadastroParticipante.this, "Participante salvo com sucesso!", Toast.LENGTH_SHORT).show();
+                    finish();
                 }
                 else {
                     Toast.makeText(ActivityCadastroParticipante.this, "Digite todas as informações do participante.", Toast.LENGTH_SHORT).show();
-                    finish();
                 }
             }
         });

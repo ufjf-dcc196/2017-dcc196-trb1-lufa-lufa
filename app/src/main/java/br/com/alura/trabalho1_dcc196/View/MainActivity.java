@@ -50,9 +50,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        db = openOrCreateDatabase("mercado", MODE_PRIVATE, null);
+        db = openOrCreateDatabase("evento", MODE_PRIVATE, null);
         ph = new ParticipanteHelper(db);
         lh = new LivroHelper(db);
+        rh = new ReservaHelper(db);
 
         participantes = ph.listarTodos();
         participantesNoEvento = ph.listarTodosEvento();
@@ -117,17 +118,21 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 Participante escolha = adaptador.getItem(position);
-                if (escolha != null && (escolha.getHrInicial() == null || escolha.getHrInicial().getTimeInMillis() == 0 )) {
+                escolha.setHr_final("");
+                if (escolha != null && (escolha.getHrInicial() == null)) {
                     escolha.setHrInicial(Calendar.getInstance());
+                    escolha.setHr_inicial(ph.mostraHoraInicial(escolha));
                     participantesNoEvento.add(escolha);
                     Toast.makeText(MainActivity.this,"Participante "+escolha.getNome()+" entrou às "+ParticipanteHelper.mostraHoraInicial(escolha)+".", Toast.LENGTH_SHORT).show();
-                } else if (escolha.getHrFinal() == null || escolha.getHrFinal().getTimeInMillis() == 0 ){
+                } else if (escolha.getHrFinal() == null){
                     escolha.setHrFinal(Calendar.getInstance());
+                    escolha.setHr_final(ph.mostraHoraFinal(escolha));
                     participantesNoEvento.remove(escolha);
                     Toast.makeText(MainActivity.this, "Participante "+escolha.getNome()+" saiu às "+ParticipanteHelper.mostraHoraFinal(escolha)+".", Toast.LENGTH_SHORT).show();
                 } else {
                     escolha.setHrInicial(null);
                     escolha.setHrFinal(null);
+                    escolha.setHr_inicial("");
                     Toast.makeText(MainActivity.this, "Participante "+escolha.getNome()+" reiniciou seu horário.", Toast.LENGTH_SHORT).show();
                 }
                 ph.alterarParticipante(escolha);

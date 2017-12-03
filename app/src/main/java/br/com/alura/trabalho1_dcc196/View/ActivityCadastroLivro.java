@@ -47,6 +47,8 @@ public class ActivityCadastroLivro extends AppCompatActivity {
         String mensagem = getIntent().getStringExtra("mensagem");
         txtAux.setText(mensagem);
 
+        livros = MainActivity.lh.listarTodos();
+
         final ArrayAdapter<Livro> adaptador = new ArrayAdapter<>(getApplicationContext(),
                 android.R.layout.simple_list_item_1,
                 android.R.id.text1,
@@ -64,12 +66,13 @@ public class ActivityCadastroLivro extends AppCompatActivity {
                 Integer ano = 0;
                 try {
                     ano = Integer.valueOf(txtAno.getText().toString());
-                    if(!titulo.isEmpty() && !editora.isEmpty() && ano!=0){
+                    if(!titulo.isEmpty() || !editora.isEmpty() || ano!=0){
                         Livro l = new Livro(titulo,editora,ano);
                         MainActivity.getLivros().add(l);
                         adaptador.add(l);
                         MainActivity.lh.criarLivro(l);
                         Toast.makeText(ActivityCadastroLivro.this, "Livro salvo com sucesso!", Toast.LENGTH_SHORT).show();
+                        finish();
                     }
                     else {
                         Toast.makeText(ActivityCadastroLivro.this, "Digite todas as informações do livro.", Toast.LENGTH_SHORT).show();

@@ -5,9 +5,15 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 import android.widget.ArrayAdapter;
 
+import org.w3c.dom.Text;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import br.com.alura.trabalho1_dcc196.Model.Participante;
 import br.com.alura.trabalho1_dcc196.View.MainActivity;
@@ -27,7 +33,7 @@ public class ParticipanteHelper {
 
     private void criaTabelaParticipante() {
         try {
-            db.execSQL("CREATE TABLE IF NOT EXISTS participante (id INTEGER PRIMARY KEY AUTOINCREMENT, nome VARCHAR, email VARCHAR, hrInicial DATETIME, hrFinal DATETIME)");
+            db.execSQL("CREATE TABLE IF NOT EXISTS participante (id INTEGER PRIMARY KEY AUTOINCREMENT, nome VARCHAR, email VARCHAR, hrInicial VARCHAR, hrFinal VARCHAR)");
         }catch (Exception e){
             Log.e("Participante", "Erro ao criar a tabela!");
             Log.e("Participante", e.getMessage());
@@ -39,9 +45,8 @@ public class ParticipanteHelper {
             db.execSQL("INSERT INTO participante (nome, email, hrInicial, hrFinal) VALUES ('" +
                     u.getNome()+"', '" +
                     u.getEmail()+"', '" +
-                    u.getHrInicial()+"', '" +
-                    u.getHrFinal()+"')");
-            //db.execSQL(String.format("INSERT INTO livro (titulo, autor, editora, ano, preco) VALUES ('%s','%s','%s',%d,%f)", l.getTitulo(), l.getAutor(), l.getEditora(), l.getAno(), l.getPreco()));
+                    null+"', '" +
+                    null+"')");
 
         }catch(Exception e){
             Log.e("Participante", "Erro ao inserir um participante");
@@ -51,13 +56,17 @@ public class ParticipanteHelper {
 
     public void alterarParticipante(Participante u){
         try{
-            db.execSQL("UPDATE participante " +
-                    "SET (hrInicial = '" +
-                    u.getHrInicial()+"', " +
-                    "hrFinal = '" +
-                    u.getHrFinal()+"') " +
-                    " WHERE id = '" +
-                    retornaIDParticipante(u)+"')");
+            String sql = "";
+            //DateFormat formatter = new SimpleDateFormat("HH:mm:ss", Locale.ENGLISH);
+            //long hrInicial = u.getHrInicial().getTimeInMillis()*1000;
+            if(u.getHrFinal() != null){
+                sql += "UPDATE participante SET hrFinal = '" + mostraHoraFinal(u) + "' WHERE id = '" + retornaIDParticipante(u) +"'" ;
+            }else if(u.getHrInicial() != null){
+                sql += "UPDATE participante SET hrInicial = '" + mostraHoraInicial(u) + "' WHERE id = '" + retornaIDParticipante(u) +"'" ;
+            } else {
+                sql += "UPDATE participante SET hrInicial = '', hrFinal = '' WHERE id = '" + retornaIDParticipante(u) +"'" ;
+            }
+            db.execSQL(sql);
         }catch(Exception e){
             Log.e("Participante", "Erro ao alterar um participante");
             Log.e("Participante", e.getLocalizedMessage());
@@ -65,21 +74,16 @@ public class ParticipanteHelper {
     }
 
     public List<Participante> listarTodos() {
+
         Cursor resultado = db.rawQuery("SELECT nome, email, hrInicial, hrFinal FROM participante", null);
         List<Participante> participantes = new ArrayList<>();
         resultado.moveToPosition(-1);
-        while (resultado.moveToNext()){
+        while (resultado.moveToNext()) {
             Participante u = new Participante();
             u.setNome(resultado.getString(0));
             u.setEmail(resultado.getString(1));
-            Long t = resultado.getLong(2) * 1000;
-            Calendar c = Calendar.getInstance();
-            c.setTimeInMillis(t);
-            u.setHrInicial(c);
-            Long t2 = resultado.getLong(3) * 1000;
-            Calendar c2 = Calendar.getInstance();
-            c2.setTimeInMillis(t2);
-            u.setHrFinal(c2);
+            u.setHr_inicial(resultado.getString(2));
+            u.setHr_final(resultado.getString(3));
             participantes.add(u);
         }
         return participantes;
@@ -90,14 +94,12 @@ public class ParticipanteHelper {
         List<Participante> participantes = new ArrayList<>();
         resultado.moveToPosition(-1);
         while (resultado.moveToNext()){
-            if(resultado.getLong(3) != 0) {
+            String hi = resultado.getString(2);
+            String hf = resultado.getString(3);
+            if(hf.equalsIgnoreCase("") && !hi.equalsIgnoreCase("")) {
                 Participante u = new Participante();
                 u.setNome(resultado.getString(0));
                 u.setEmail(resultado.getString(1));
-                Long t = resultado.getLong(2) * 1000;
-                Calendar c = Calendar.getInstance();
-                c.setTimeInMillis(t);
-                u.setHrInicial(c);
                 participantes.add(u);
             }
         }
