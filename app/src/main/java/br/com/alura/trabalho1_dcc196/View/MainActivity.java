@@ -20,6 +20,7 @@ import br.com.alura.trabalho1_dcc196.Helper.ParticipanteHelper;
 import br.com.alura.trabalho1_dcc196.Helper.ReservaHelper;
 import br.com.alura.trabalho1_dcc196.Model.Livro;
 import br.com.alura.trabalho1_dcc196.Model.Participante;
+import br.com.alura.trabalho1_dcc196.Model.Reserva;
 import br.com.alura.trabalho1_dcc196.R;
 
 public class MainActivity extends AppCompatActivity {
@@ -44,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
         return livros;
     }
 
-
+    public static List<Participante> reservas = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
         participantes = ph.listarTodos();
         participantesNoEvento = ph.listarTodosEvento();
         livros = lh.listarTodos();
+        reservas = rh.listarTodos();
 
         btnLivro = (Button) findViewById(R.id.btnCadastroLivros);
         btnParticipante = (Button) findViewById(R.id.btnCadastroParticipante);

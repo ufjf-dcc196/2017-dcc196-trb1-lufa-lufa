@@ -3,20 +3,15 @@ package br.com.alura.trabalho1_dcc196.Helper;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
-import android.widget.ArrayAdapter;
 
-import org.w3c.dom.Text;
-
-import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
 import br.com.alura.trabalho1_dcc196.Model.Participante;
-import br.com.alura.trabalho1_dcc196.View.MainActivity;
 
 /**
  * Created by Filipe on 22/10/2017.
@@ -57,11 +52,9 @@ public class ParticipanteHelper {
     public void alterarParticipante(Participante u){
         try{
             String sql = "";
-            //DateFormat formatter = new SimpleDateFormat("HH:mm:ss", Locale.ENGLISH);
-            //long hrInicial = u.getHrInicial().getTimeInMillis()*1000;
-            if(u.getHrFinal() != null){
+            if(u.getHr_final() != ""){
                 sql += "UPDATE participante SET hrFinal = '" + mostraHoraFinal(u) + "' WHERE id = '" + retornaIDParticipante(u) +"'" ;
-            }else if(u.getHrInicial() != null){
+            }else if(u.getHr_inicial() != ""){
                 sql += "UPDATE participante SET hrInicial = '" + mostraHoraInicial(u) + "' WHERE id = '" + retornaIDParticipante(u) +"'" ;
             } else {
                 sql += "UPDATE participante SET hrInicial = '', hrFinal = '' WHERE id = '" + retornaIDParticipante(u) +"'" ;
@@ -84,6 +77,19 @@ public class ParticipanteHelper {
             u.setEmail(resultado.getString(1));
             u.setHr_inicial(resultado.getString(2));
             u.setHr_final(resultado.getString(3));
+            try{
+                Calendar cal = Calendar.getInstance();
+                SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss", Locale.ENGLISH);
+                cal.setTime(sdf.parse(u.getHr_inicial()));
+                u.setHrInicial(cal);
+                Calendar cal2 = Calendar.getInstance();
+                SimpleDateFormat sdf2 = new SimpleDateFormat("HH:mm:ss", Locale.ENGLISH);
+                cal2.setTime(sdf.parse(u.getHr_final()));
+                u.setHrFinal(cal2);
+            }catch(ParseException e){
+                Log.e("Participante", "Erro ao retornar horário de um participante");
+                Log.e("Participante", e.getLocalizedMessage());
+            }
             participantes.add(u);
         }
         return participantes;
@@ -114,6 +120,20 @@ public class ParticipanteHelper {
                 return resultado.getInt(0);
         }
         return -1;
+    }
+
+    public Participante retornaParticipante(Integer id){
+        Cursor resultado = db.rawQuery("SELECT id, nome, email FROM participante", null);
+        resultado.moveToPosition(-1);
+        while (resultado.moveToNext()){
+            if(resultado.getInt(0) == id){
+                Participante p = new Participante();
+                p.setNome(resultado.getString(1));
+                p.setEmail(resultado.getString(2));
+                return p;
+            }
+        }
+        return null;
     }
 
     public static String mostraHoraInicial(Participante p) {

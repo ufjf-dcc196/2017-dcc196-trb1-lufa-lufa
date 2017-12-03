@@ -32,10 +32,10 @@ public class ActivityParticipante extends AppCompatActivity {
         Participante participante = (Participante) getIntent().getSerializableExtra("participante");
         txtNome.setText(participante.getNome());
         txtEmail.setText(participante.getEmail());
-        if(participante.getHr_inicial() != "")
+        if(participante.getHrInicial() != null)
             txtHrEntrada.setText(participante.getHr_inicial());
         else txtHrEntrada.setText("Sem horário de entrada.");
-        if(participante.getHr_final() != "")
+        if(participante.getHrFinal() != null)
             txtHrSaida.setText(participante.getHr_final());
         else txtHrSaida.setText("Sem horário de saída.");
 

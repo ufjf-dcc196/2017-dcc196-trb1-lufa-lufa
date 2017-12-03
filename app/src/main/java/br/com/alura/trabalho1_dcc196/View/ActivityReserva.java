@@ -40,7 +40,8 @@ public class ActivityReserva extends AppCompatActivity {
         setContentView(R.layout.activity_reserva);
 
         livros = MainActivity.lh.listarTodos();
-        participantes = MainActivity.getParticipantesNoEvento();
+        //participantes = MainActivity.getParticipantesNoEvento();
+        participantes = MainActivity.ph.listarTodosEvento();
 
         btnSalvar = (Button) findViewById(R.id.btnSalvar);
         btnVoltar = (Button) findViewById(R.id.btnVoltar);
@@ -77,9 +78,9 @@ public class ActivityReserva extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if(livroSelecionado != null && participanteSelecionado != null) {
-                    for (int i = 0; i < MainActivity.getParticipantesNoEvento().size(); i++) {
-                        if (MainActivity.getParticipantesNoEvento().get(i).getNome().equals(participanteSelecionado.getNome())) {
-                            MainActivity.getParticipantesNoEvento().get(i).adicionaReserva(livroSelecionado);
+                    for (int i = 0; i < participantes.size(); i++) {
+                        if (participantes.get(i).getNome().equals(participanteSelecionado.getNome())) {
+                            participantes.get(i).adicionaReserva(livroSelecionado);
                             MainActivity.rh.criarReserva(participanteSelecionado,livroSelecionado);
                             Toast.makeText(ActivityReserva.this, "Reserva feita com sucesso!", Toast.LENGTH_SHORT).show();
                         }
