@@ -40,8 +40,8 @@ public class ParticipanteHelper {
             db.execSQL("INSERT INTO participante (nome, email, hrInicial, hrFinal) VALUES ('" +
                     u.getNome()+"', '" +
                     u.getEmail()+"', '" +
-                    null+"', '" +
-                    null+"')");
+                    ""+"', '" +
+                    ""+"')");
 
         }catch(Exception e){
             Log.e("Participante", "Erro ao inserir um participante");
@@ -120,20 +120,6 @@ public class ParticipanteHelper {
                 return resultado.getInt(0);
         }
         return -1;
-    }
-
-    public Participante retornaParticipante(Integer id){
-        Cursor resultado = db.rawQuery("SELECT id, nome, email FROM participante", null);
-        resultado.moveToPosition(-1);
-        while (resultado.moveToNext()){
-            if(resultado.getInt(0) == id){
-                Participante p = new Participante();
-                p.setNome(resultado.getString(1));
-                p.setEmail(resultado.getString(2));
-                return p;
-            }
-        }
-        return null;
     }
 
     public static String mostraHoraInicial(Participante p) {

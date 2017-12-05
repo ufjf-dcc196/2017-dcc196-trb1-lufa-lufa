@@ -83,6 +83,7 @@ public class ActivityReserva extends AppCompatActivity {
                             participantes.get(i).adicionaReserva(livroSelecionado);
                             MainActivity.rh.criarReserva(participanteSelecionado,livroSelecionado);
                             Toast.makeText(ActivityReserva.this, "Reserva feita com sucesso!", Toast.LENGTH_SHORT).show();
+                            finish();
                         }
                     }
                 } else {

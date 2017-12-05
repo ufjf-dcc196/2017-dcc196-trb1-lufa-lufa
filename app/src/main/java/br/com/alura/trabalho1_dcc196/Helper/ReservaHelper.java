@@ -47,21 +47,38 @@ public class ReservaHelper {
         };
     }
 
-    //*********************terminar a lógica*******************
-    public List<Participante> listarTodos() {
-        Cursor resultado = db.rawQuery("SELECT id_participante, id_livro FROM reserva", null);
+    public List<Participante> listarTodasReservasLivro(Livro l) {
+        Cursor resultado = db.rawQuery("SELECT id_livro, nome, email FROM reserva r INNER JOIN participante p ON r.id_participante=p.id", null);
         List<Participante> reservas = new ArrayList<>();
         resultado.moveToPosition(-1);
-//        while (resultado.moveToNext()){
-//            Integer id_participante = resultado.getInt(0);
-//            if(id_participante != 0){
-//                Participante u = new Participante();
-//                u.setNome();
-//                u.setEmail();
-//                reservas.add(u);
-//            }
-//
-//        }
+        int idLivro = MainActivity.lh.retornaIDLivro(l);
+        while (resultado.moveToNext()){
+            Integer id_livro = resultado.getInt(0);
+            if(id_livro != 0 && idLivro == id_livro ){
+                Participante u = new Participante();
+                u.setNome(resultado.getString(1));
+                u.setEmail(resultado.getString(2));
+                reservas.add(u);
+            }
+        }
+        return reservas;
+    }
+
+    public List<Livro> listarTodasReservasParticipante(Participante p) {
+        Cursor resultado = db.rawQuery("SELECT id_participante, titulo, editora, ano FROM reserva r INNER JOIN livro l ON r.id_participante=l.id", null);
+        List<Livro> reservas = new ArrayList<>();
+        resultado.moveToPosition(-1);
+        int idParticipante = MainActivity.ph.retornaIDParticipante(p);
+        while (resultado.moveToNext()){
+            Integer id_participante = resultado.getInt(0);
+            if(id_participante != 0 && idParticipante == id_participante ){
+                Livro u = new Livro();
+                u.setTitulo(resultado.getString(1));
+                u.setEditora(resultado.getString(2));
+                u.setAno(resultado.getInt(3));
+                reservas.add(u);
+            }
+        }
         return reservas;
     }
 

@@ -32,9 +32,10 @@ public class ActivityListaLivro extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lista_livro);
+        Livro livro = (Livro) getIntent().getSerializableExtra("livro");
 
         lstParticipantesReservados = (ListView) findViewById(R.id.lstReservados);
-        reservas = MainActivity.rh.listarTodos();
+        reservas = MainActivity.rh.listarTodasReservasLivro(livro);
 
         final ArrayAdapter<String> adaptador = new ArrayAdapter<String>(getApplicationContext(),
                 android.R.layout.simple_list_item_1,
@@ -48,16 +49,16 @@ public class ActivityListaLivro extends AppCompatActivity {
         txtEditora = (TextView) findViewById(R.id.txtEditora2);
         txtAno = (TextView) findViewById(R.id.txtAnoPublicacao2);
 
-        Livro livro = (Livro) getIntent().getSerializableExtra("livro");
         txtTitulo.setText(livro.getTitulo());
         txtEditora.setText(livro.getEditora());
         txtAno.setText(livro.getAno().toString());
 
-        for(int i=0; i < MainActivity.getParticipantesNoEvento().size(); i++) {
-                ArrayList<Livro> listaLivro = MainActivity.getParticipantesNoEvento().get(i).getLivrosReservados();
-                for(int j=0; j<listaLivro.size(); j++) {
-                    if (listaLivro.get(j).getTitulo().equals(livro.getTitulo())) {
-                        adaptador.add(MainActivity.getParticipantesNoEvento().get(i).getNome().toString());
+        for(int i=0; i < MainActivity.getParticipantes().size(); i++) {
+                Participante aux = MainActivity.getParticipantes().get(i);
+                for(int j=0; j<MainActivity.rh.listarTodasReservasParticipante(aux).size(); j++) {
+                    List<Livro> livrosReservados = MainActivity.rh.listarTodasReservasParticipante(aux);
+                    if (livrosReservados.get(j).getTitulo().equals(livro.getTitulo())) {
+                        adaptador.add(reservas.get(i).getNome().toString());
                     }
                 }
         }

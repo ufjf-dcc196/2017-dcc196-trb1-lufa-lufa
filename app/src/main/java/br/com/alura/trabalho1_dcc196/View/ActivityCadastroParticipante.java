@@ -45,6 +45,7 @@ public class ActivityCadastroParticipante extends AppCompatActivity {
                 if(!nome.isEmpty() || !email.isEmpty()){
                     Participante p = new Participante(nome,email);
                     MainActivity.getParticipantes().add(p);
+                    MainActivity.getParticipantesNoEvento().add(p);
                     MainActivity.ph.criarParticipante(p);
                     Toast.makeText(ActivityCadastroParticipante.this, "Participante salvo com sucesso!", Toast.LENGTH_SHORT).show();
                     finish();
